@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 
 const Login = () => {
     const [username, setUsername] = useState()
-    const [password, setPassword] = useState()
+    const [setPassword] = useState()
     const {setAuthData} = useContext(authContext)
     const history = useHistory()
 

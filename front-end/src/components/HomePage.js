@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import {Button, Col, Row, Container, Form, Card} from "react-bootstrap"
 import { authContext } from '../context/AuthContext'
-import Tweets from './Tweets'
 
 
 const HomePage = () => {
@@ -23,14 +22,36 @@ const HomePage = () => {
         })
         .then((response) => response.json())
         .then(res => {
-            console.log("tweet sent")
+            if(tweet.includes("#email")){
+                // send sqs
+                sendSqs()
+                console.log("tweet sent with sqs")
+            }
+            else {
+                console.log("tweet sent to database")
+            }
         }).catch(error => {
             console.log(error)
         })
     }
 
     //emailQueue
-    // https://sqs.eu-north-1.amazonaws.com/951445330328/emailQueue
+    const sendSqs = () => {
+        const email = auth.data.email
+        fetch("https://uirnqlgx81.execute-api.eu-north-1.amazonaws.com/prod", {
+            method: "POST",
+            headers: {
+                Accept: "application/json", "Content-Type": "application/json"
+            },
+            body: JSON.stringify({email})   
+        })
+        .then((response) => response.json())
+        .then(res => {
+            console.log(res)
+        }).catch(error => {
+            console.log(error)
+        })
+    }
 
     const onLogOut = () => {
         setAuthData(null)
