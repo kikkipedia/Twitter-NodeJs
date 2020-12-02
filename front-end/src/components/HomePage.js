@@ -39,6 +39,7 @@ const HomePage = () => {
     const sendSqs = () => {
         const email = auth.data.email
         fetch("https://uirnqlgx81.execute-api.eu-north-1.amazonaws.com/prod", {
+            mode: "no-cors",
             method: "POST",
             headers: {
                 Accept: "application/json", "Content-Type": "application/json"
